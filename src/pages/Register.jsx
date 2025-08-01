@@ -11,7 +11,7 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('https://the-app-production.up.railway.app/auth/register', { name, email, password });
+      await axios.post(`${import.meta.env.VITE_API_URL}/auth/register`, { email, password });
 
       alert('✅ Successful registration');
       navigate('/login'); // Redirect to login

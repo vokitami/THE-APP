@@ -10,7 +10,8 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('https://the-app-production.up.railway.app/auth/login', { email, password });
+        const res = await axios.post(`${import.meta.env.VITE_API_URL}/auth/login`, { email, password });
+
       console.log(res.data);
 
       // Save token in local storage

@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { TbLock, TbLockOpen } from "react-icons/tb";
 import { GoTrash } from "react-icons/go";
-import { formatDistanceToNow, format } from 'date-fns'; 
+import { formatDistanceToNow, format } from 'date-fns';
 
 export default function Dashboard() {
   const [users, setUsers] = useState([]);
@@ -20,20 +20,18 @@ export default function Dashboard() {
     }
 
     axios
-      .get('https://the-app-production.up.railway.app/users', {
+      .get(`${import.meta.env.VITE_API_URL}/users`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        const sorted = res.data.sort((a, b) =>
-          new Date(b.lastLogin) - new Date(a.lastLogin)
-        );
+        const sorted = res.data.sort((a, b) => new Date(b.lastLogin) - new Date(a.lastLogin));
         setUsers(sorted);
       })
       .catch(() => {
         localStorage.removeItem('token');
         navigate('/login');
       });
-  }, []);
+  }, [navigate]);
 
   const filteredUsers = users.filter(
     (u) =>
@@ -61,12 +59,12 @@ export default function Dashboard() {
 
     try {
       await axios.post(
-        `https://the-app-production.up.railway.app/users/${action}`,
+        `${import.meta.env.VITE_API_URL}/users/${action}`,
         { ids: selectedUsers },
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setMessage(`Users ${action} successfully ✅`);
-      const res = await axios.get('https://the-app-production.up.railway.app/users', {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/users`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setUsers(res.data);
@@ -77,13 +75,12 @@ export default function Dashboard() {
     }
   };
 
-  // 🔥 Format last login relative + tooltip
   const formatLastLogin = (date) => {
     if (!date) return { relative: 'Never logged in', exact: '' };
     const dateObj = new Date(date);
     return {
-      relative: formatDistanceToNow(dateObj, { addSuffix: true }), // e.g. "2 hours ago"
-      exact: format(dateObj, 'PPpp'), // e.g. "Feb 5, 2025, 3:45 PM"
+      relative: formatDistanceToNow(dateObj, { addSuffix: true }),
+      exact: format(dateObj, 'PPpp'),
     };
   };
 

@@ -15,11 +15,11 @@ export default function ResetPassword() {
     setError(null);
 
     try {
-      await axios.post(`http://localhost:3000/auth/reset-password/${token}`, { password });
-      setMessage('Password changed successfully! Redirecting to login...');
+      await axios.post(`${import.meta.env.VITE_API_URL}/auth/reset-password/${token}`, { password });
+      setMessage('✅ Password changed successfully! Redirecting to login...');
       setTimeout(() => navigate('/login'), 2000);
     } catch (err) {
-      setError(err.response?.data?.error || 'Error resetting password');
+      setError(err.response?.data?.error || '❌ Error resetting password');
     }
   };
 
@@ -39,7 +39,10 @@ export default function ResetPassword() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded w-full cursor-pointer hover:bg-blue-700 transition">
+          <button 
+            type="submit" 
+            className="bg-blue-600 text-white px-4 py-2 rounded w-full cursor-pointer hover:bg-blue-700 transition"
+          >
             Change Password
           </button>
         </form>

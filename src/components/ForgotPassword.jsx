@@ -11,10 +11,10 @@ export default function ForgotPassword() {
     setMessage(null);
     setError(null);
     try {
-      await axios.post('http://localhost:3000/auth/forgot-password', { email });
-      setMessage('If this email exists, you will receive a password reset link.');
+      await axios.post(`${import.meta.env.VITE_API_URL}/auth/forgot-password`, { email });
+      setMessage('✅ If this email exists, you will receive a password reset link.');
     } catch (err) {
-      setError('Error sending password reset email.');
+      setError('❌ Error sending password reset email.');
     }
   };
 
@@ -36,7 +36,10 @@ export default function ForgotPassword() {
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-          <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded w-full cursor-pointer hover:bg-blue-700 transition">
+          <button 
+            type="submit" 
+            className="bg-blue-600 text-white px-4 py-2 rounded w-full cursor-pointer hover:bg-blue-700 transition"
+          >
             Send Reset Link
           </button>
         </form>
