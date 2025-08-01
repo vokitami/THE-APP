@@ -20,7 +20,7 @@ export default function Dashboard() {
     }
 
     axios
-      .get('http://localhost:3000/users', {
+      .get('https://the-app-production.up.railway.app/users', {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -61,12 +61,12 @@ export default function Dashboard() {
 
     try {
       await axios.post(
-        `http://localhost:3000/users/${action}`,
+        `https://the-app-production.up.railway.app/users/${action}`,
         { ids: selectedUsers },
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setMessage(`Users ${action} successfully ✅`);
-      const res = await axios.get('http://localhost:3000/users', {
+      const res = await axios.get('https://the-app-production.up.railway.app/users', {
         headers: { Authorization: `Bearer ${token}` },
       });
       setUsers(res.data);

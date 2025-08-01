@@ -53,7 +53,7 @@ router.post('/forgot-password', async (req, res) => {
 
     // Generate token valid for 15 minutes
     const resetToken = jwt.sign({ id: user.id }, RESET_SECRET, { expiresIn: '15m' });
-    const resetLink = `http://localhost:5173/reset-password/${resetToken}`;
+    const resetLink = `https://the-app-production.up.railway.app/reset-password/${resetToken}`;
 
     res.json({ message: 'Recovery link generated', resetLink });
   });
