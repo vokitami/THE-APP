@@ -7,8 +7,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
 
-app.listen(3000, () => console.log('✅ Backend corriendo en http://localhost:3000'));
+app.listen(3000, () => console.log('✅ Backend running at http://localhost:3000'));

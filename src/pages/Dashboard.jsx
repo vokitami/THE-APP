@@ -82,9 +82,8 @@ export default function Dashboard() {
     if (!date) return { relative: 'Never logged in', exact: '' };
     const dateObj = new Date(date);
     return {
-      
-      relative: formatDistanceToNow(dateObj, { addSuffix: true }), // Ej: "2 hours ago"
-      exact: format(dateObj, 'PPpp'), // Ej: "Feb 5, 2025, 3:45 PM"
+      relative: formatDistanceToNow(dateObj, { addSuffix: true }), // e.g. "2 hours ago"
+      exact: format(dateObj, 'PPpp'), // e.g. "Feb 5, 2025, 3:45 PM"
     };
   };
 
@@ -145,7 +144,7 @@ export default function Dashboard() {
                 />
               </th>
               <th className="border-y border-gray-300 p-2 text-center">Name</th>
-              <th className="border-y border-gray-300 p-2 text-center">Email </th>
+              <th className="border-y border-gray-300 p-2 text-center">Email</th>
               <th className="border-y border-gray-300 p-2 text-center">Last Login</th>
               <th className="border-y border-gray-300 p-2 text-center">Status</th>
             </tr>
@@ -173,7 +172,7 @@ export default function Dashboard() {
                     <td className="border-y border-gray-300 p-2 text-center">{user.email}</td>
                     <td
                       className="border-y border-gray-300 p-2 text-center"
-                      title={loginInfo.exact} // ✅ Tooltip con fecha exacta
+                      title={loginInfo.exact} // ✅ Tooltip with exact date
                     >
                       {loginInfo.relative}
                     </td>
