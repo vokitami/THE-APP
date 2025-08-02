@@ -11,9 +11,7 @@ export default function Login() {
     e.preventDefault();
     try {
         const res = await API.post('/auth/login', { email, password });
-
-      console.log(res.data);
-
+        
       // Save token in local storage
       localStorage.setItem('token', res.data.token);
 
