@@ -9,26 +9,27 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// ✅ Configuración de CORS
+// ✅ Configuración básica de CORS
 app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin || origin === process.env.FRONTEND_URL) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: process.env.FRONTEND_URL || '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,
 }));
-
-
-// Middleware para manejar OPTIONS explícitamente (por si acaso)
-app.options('*', cors());
 
 app.use(express.json());
 
+// ✅ Middleware para manejar OPTIONS explícitamente
+app.use((req, res, next) => {
+  if (req.method === 'OPTIONS') {
+    res.setHeader('Access-Control-Allow-Origin', process.env.FRONTEND_URL || '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    return res.sendStatus(200); // Responde a preflight OPTIONS
+  }
+  next();
+});
+
+// ✅ Rutas
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
 
