@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { TbLock, TbLockOpen } from "react-icons/tb";
 import { GoTrash } from "react-icons/go";
 import { formatDistanceToNow, format } from 'date-fns';
+import API from '../API';
 
 export default function Dashboard() {
   const [users, setUsers] = useState([]);
@@ -19,10 +19,7 @@ export default function Dashboard() {
       return;
     }
 
-    axios
-      .get(`${import.meta.env.VITE_API_URL}/users`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+    API.get('/users')
       .then((res) => {
         const sorted = res.data.sort((a, b) => new Date(b.lastLogin) - new Date(a.lastLogin));
         setUsers(sorted);
@@ -55,18 +52,12 @@ export default function Dashboard() {
 
   const handleAction = async (action) => {
     if (selectedUsers.length === 0) return;
-    const token = localStorage.getItem('token');
 
     try {
-      await axios.post(
-        `${import.meta.env.VITE_API_URL}/users/${action}`,
-        { ids: selectedUsers },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      await API.post(`/users/${action}`, { ids: selectedUsers });
       setMessage(`Users ${action} successfully ✅`);
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/users`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+
+      const res = await API.get('/users');
       setUsers(res.data);
       setSelectedUsers([]);
       setTimeout(() => setMessage(null), 3000);
@@ -83,7 +74,7 @@ export default function Dashboard() {
       exact: format(dateObj, 'PPpp'),
     };
   };
-
+  
   return (
     <>
       <header className="flex w-full h-[10vh] bg-gradient-to-t from-blue-950 to-cyan-300 p-4 justify-between">

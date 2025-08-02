@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from 'axios';
+import API from '../API';
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState('');
@@ -10,11 +10,18 @@ export default function ForgotPassword() {
     e.preventDefault();
     setMessage(null);
     setError(null);
+
+    // Validación básica de email
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      setError('❌ Please enter a valid email address.');
+      return;
+    }
+
     try {
-      await axios.post(`${import.meta.env.VITE_API_URL}/auth/forgot-password`, { email });
+      await API.post(`/auth/forgot-password`, { email });
       setMessage('✅ If this email exists, you will receive a password reset link.');
     } catch (err) {
-      setError('❌ Error sending password reset email.');
+      setError(err.response?.data?.error || '❌ Error sending password reset email.');
     }
   };
 
