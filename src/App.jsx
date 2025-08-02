@@ -10,7 +10,7 @@ function App() {
     <>
       <Router>
         <Routes>
-          <Route path="/" element={<Navigate to="/login" />} />  {/* Redirección */}
+          <Route path="/" element={<Navigate to="/login" />} />  {/* Redirection */}
           <Route path="/login" element={<Login />} />
           <Route path='/register' element={<Register/>}/>
           <Route path='/dashboard' element={<Dashboard/>}/>

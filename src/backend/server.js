@@ -11,10 +11,18 @@ const PORT = process.env.PORT || 3000;
 
 // ✅ Configuración de CORS
 app.use(cors({
-  origin: process.env.FRONTEND_URL || '*', // O especifica tu frontend: 'https://the-app-2am5.vercel.app'
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Incluir OPTIONS
-  allowedHeaders: ['Content-Type', 'Authorization'], // Cabeceras permitidas
+  origin: (origin, callback) => {
+    if (!origin || origin === process.env.FRONTEND_URL) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
 }));
+
 
 // Middleware para manejar OPTIONS explícitamente (por si acaso)
 app.options('*', cors());
