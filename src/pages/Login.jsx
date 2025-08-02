@@ -7,20 +7,32 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-        const res = await API.post('/auth/login', { email, password });
-        
-      // Save token in local storage
-      localStorage.setItem('token', res.data.token);
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    console.log("📤 Sending login request:", { email, password });
+    const res = await API.post('/auth/login', { email, password });
 
-      alert('✅ Login successful');
-      navigate('/dashboard'); // Redirect to dashboard
-    } catch (err) {
-      alert(err.response?.data?.error || 'Login error');
+    console.log("✅ Login response:", res.data);
+
+    if (!res.data?.token) {
+      console.error("❌ No token received in response");
+      alert("Login failed: No token received from server");
+      return;
     }
-  };
+
+    // Save token in local storage
+    localStorage.setItem('token', res.data.token);
+    console.log("💾 Token saved:", res.data.token);
+
+    alert('✅ Login successful');
+    navigate('/dashboard'); // Redirect to dashboard
+  } catch (err) {
+    console.error("❌ Login error:", err.response?.data || err.message);
+    alert(err.response?.data?.error || 'Login error');
+  }
+};
+
 
   return (
     <>
