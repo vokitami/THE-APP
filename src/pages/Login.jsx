@@ -9,7 +9,6 @@ export default function Login() {
 
 const handleSubmit = async (e) => {
   e.preventDefault();
-  alert("form enviado");
   try {
     console.log("📤 Sending login request:", { email, password });
     const res = await API.post('/auth/login', { email, password });
