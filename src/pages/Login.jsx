@@ -12,6 +12,7 @@ const handleSubmit = async (e) => {
   try {
     console.log("📤 Sending login request:", { email, password });
     const res = await API.post('/auth/login', { email, password });
+    console.log('Token Guardado:', localStorage.getItem('token'));
 
     console.log("✅ Login response:", res.data);
 
@@ -22,6 +23,7 @@ const handleSubmit = async (e) => {
     }
 
     // Save token in local storage
+    console.log(res.data);
     localStorage.setItem('token', res.data.token);
     console.log("💾 Token saved:", res.data.token);
 
