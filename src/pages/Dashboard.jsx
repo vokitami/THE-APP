@@ -78,12 +78,12 @@ export default function Dashboard() {
   return (
     <>
       <header className="flex w-full h-[10vh] bg-gradient-to-t from-blue-950 to-cyan-300 p-4 justify-between">
-        <a href="/login" className="text-3xl ml-10 font-bold text-blue-950">
+        <Link to="/login" className="text-3xl ml-10 font-bold text-blue-950">
           THE APP
-        </a>
-        <a href="/login" className="text-3xl mr-20 hover:text-zinc-800 cursor-pointer">
+        </Link>
+        <Link to="/login" className="text-3xl mr-20 hover:text-zinc-800 cursor-pointer">
           Logout
-        </a>
+        </Link>
       </header>
 
       <main className="p-6">

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from '../API';
+import { Link } from "react-router-dom"; 
 
 export default function Register() {
   const [name, setName] = useState('');
@@ -94,7 +95,7 @@ export default function Register() {
 
           <div className="relative flex justify-center items-center w-full px-6">
             <p>
-              Already have an account? <a href="/login" className="text-blue-600 cursor-pointer hover:underline">Sign in here</a>
+              Already have an account? <Link to="/login" className="text-blue-600 cursor-pointer hover:underline">Sign in here</Link>
             </p>
           </div>
         </div>
