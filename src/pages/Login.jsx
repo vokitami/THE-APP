@@ -11,11 +11,7 @@ export default function Login() {
 const handleSubmit = async (e) => {
   e.preventDefault();
   try {
-    console.log("📤 Sending login request:", { email, password });
     const res = await API.post('/auth/login', { email, password });
-    console.log('Token Guardado:', localStorage.getItem('token'));
-
-    console.log("✅ Login response:", res.data);
 
     if (!res.data?.token) {
       console.error("❌ No token received in response");
