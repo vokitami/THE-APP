@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import API from '../API';
+import { Link } from 'react-router-dom';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -96,13 +97,13 @@ const handleSubmit = async (e) => {
           <div className="relative flex justify-between w-full px-6">
             <p>
               Don’t have an account?{' '}
-              <a href="/register" className="text-blue-600 cursor-pointer hover:underline">
+              <Link to="/register" className="text-blue-600 cursor-pointer hover:underline">
                 Sign up
-              </a>
+              </Link>
             </p>
-            <a href="/forgot-password" className="self-end text-blue-600 cursor-pointer hover:underline">
+            <Link to="/forgot-password" className="self-end text-blue-600 cursor-pointer hover:underline">
               Forgot Password?
-            </a>
+            </Link>
           </div>
         </div>
 
